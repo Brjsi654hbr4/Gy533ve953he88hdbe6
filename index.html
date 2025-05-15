@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Кибербезопасность и OSINT</title>
-  <style>
-    body { background: #0f172a; color: #e0f2fe; margin: 0; font-family: 'Segoe UI', sans-serif; }
-    .navbar { background: #1e293b; padding: 1rem; position: fixed; top: 0; width: 100%; display: flex; gap: 1rem; justify-content: center; }
-    .nav-link { color: #38bdf8; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; transition: 0.3s; }
-    .nav-link:hover { background: #334155; }
-    .section { background: #1e293b; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem; margin: 5rem 1rem 1rem; }
-    ul { list-style: '🔹 '; padding-left: 1.5rem; }
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Анонимность и Угрозы в Интернете</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <nav class="navbar">
-    <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Главная</a>
-    <a class="nav-link" href="osint.html"><i class="fas fa-search"></i> OSINT</a>
-    <a class="nav-link" href="monitor.html"><i class="fas fa-shield-alt"></i> Мониторинг</a>
+<header>
+  <nav class="menu">
+    <a href="index.html" class="active">Главная</a>
+    <a href="threats.html">Угрозы</a>
+    <a href="tips.html">Советы</a>
+    <a href="memo.html">Памятка</a>
   </nav>
+</header>
 
-  <div class="section">
-    <h1><i class="fas fa-user-secret"></i> Основы цифровой безопасности</h1>
-    <ul>
-      <li>Используйте Tor/VPN для анонимности</li>
-      <li>Приватные браузеры: Brave, DuckDuckGo</li>
-      <li>Менеджеры паролей: KeePassXC</li>
-    </ul>
-  </div>
+<main class="container">
+  <h1>Добро пожаловать!</h1>
+  <p>Этот сайт демонстрирует, насколько важно знать об угрозах в интернете и как легко злоумышленники могут собирать ваши данные.</p>
+  <p>Перейдите на вкладку «Угрозы», чтобы увидеть это наглядно.</p>
+</main>
+
+<footer>
+  <p>© 2025 Проект по безопасности в интернете</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
