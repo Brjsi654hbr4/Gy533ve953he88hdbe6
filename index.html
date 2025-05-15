@@ -1,58 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>OSINT Демонстрация — Вход</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Кибербезопасность и OSINT</title>
+  <style>
+    body { background: #0f172a; color: #e0f2fe; margin: 0; font-family: 'Segoe UI', sans-serif; }
+    .navbar { background: #1e293b; padding: 1rem; position: fixed; top: 0; width: 100%; display: flex; gap: 1rem; justify-content: center; }
+    .nav-link { color: #38bdf8; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; transition: 0.3s; }
+    .nav-link:hover { background: #334155; }
+    .section { background: #1e293b; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem; margin: 5rem 1rem 1rem; }
+    ul { list-style: '🔹 '; padding-left: 1.5rem; }
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+  </style>
 </head>
 <body>
-
-<header>
   <nav class="navbar">
-    <div class="nav-logo">🔍 OSINT Demo</div>
-    <ul class="nav-menu">
-      <li><a href="index.html" class="active">Вход</a></li>
-      <li><a href="home.html">Памятка</a></li>
-      <li><a href="profile.html">Профиль</a></li>
-    </ul>
+    <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Главная</a>
+    <a class="nav-link" href="osint.html"><i class="fas fa-search"></i> OSINT</a>
+    <a class="nav-link" href="monitor.html"><i class="fas fa-shield-alt"></i> Мониторинг</a>
   </nav>
-</header>
 
-<main class="container">
-
-  <section class="auth-section">
-    <h1>Добро пожаловать</h1>
-    <p>Для доступа к сайту необходимо зарегистрироваться или войти</p>
-
-    <div class="form-wrapper">
-
-      <form id="registerForm" class="auth-form">
-        <h2>Регистрация</h2>
-        <input type="text" id="regUsername" placeholder="Имя пользователя" required minlength="3" />
-        <input type="password" id="regPassword" placeholder="Пароль" required minlength="5" />
-        <button type="submit">Зарегистрироваться</button>
-      </form>
-
-      <form id="loginForm" class="auth-form">
-        <h2>Вход</h2>
-        <input type="text" id="loginUsername" placeholder="Имя пользователя" required />
-        <input type="password" id="loginPassword" placeholder="Пароль" required />
-        <button type="submit">Войти</button>
-      </form>
-
-    </div>
-
-  </section>
-
-  <section class="log-section">
-    <h3>Лог действий</h3>
-    <pre id="logArea" class="log-area"></pre>
-  </section>
-
-</main>
-
-<script src="script.js"></script>
-
+  <div class="section">
+    <h1><i class="fas fa-user-secret"></i> Основы цифровой безопасности</h1>
+    <ul>
+      <li>Используйте Tor/VPN для анонимности</li>
+      <li>Приватные браузеры: Brave, DuckDuckGo</li>
+      <li>Менеджеры паролей: KeePassXC</li>
+    </ul>
+  </div>
 </body>
 </html>

