@@ -1,125 +1,65 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Памятка по безопасности</title>
-<link rel="stylesheet" href="styles.css" />
-<style>
-  body {
-    background: #0f172a;
-    color: #e0f2fe;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-  }
-  header {
-    background: #1e293b;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  }
-  .menu a {
-    color: #60a5fa;
-    margin: 0 1rem;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-  }
-  .menu a:hover {
-    color: #38bdf8;
-  }
-  main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  h1 {
-    text-align: center;
-    color: #38bdf8;
-    margin-bottom: 1rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-  }
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  li {
-    background: #1e293b;
-    margin: 12px 0;
-    padding: 15px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px #3b82f6aa;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    position: relative;
-  }
-  li::before {
-    content: "🔐";
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-  }
-  h2.section-title {
-    margin-top: 2rem;
-    color: #60a5fa;
-    font-weight: 700;
-    border-bottom: 2px solid #60a5fa;
-    padding-bottom: 5px;
-  }
-  a.resource-link {
-    color: #38bdf8;
-    text-decoration: underline;
-  }
-  a.resource-link:hover {
-    color: #60a5fa;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Памятка по анонимности и безопасности</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">Анонимность и Угрозы</a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Главная</a></li>
+        <li><a href="memo.html" class="nav-link active">Памятка</a></li>
+        <li><a href="threats.html" class="nav-link">Угрозы</a></li>
+        <li><a href="tips.html" class="nav-link">Советы</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo" style="color:#38bdf8; font-weight:700; font-size:1.5rem;">Анонимность & Угрозы</div>
-  <nav class="menu">
-    <a href="index.html">Главная</a>
-    <a href="memo.html" style="color:#60a5fa; border-bottom: 2px solid #60a5fa;">Памятка</a>
-    <a href="threats.html">Угрозы</a>
-  </nav>
-</header>
+  <main class="container">
+    <h1>Памятка по анонимности и безопасности в интернете</h1>
 
-<main>
-  <h1>Памятка по анонимности и безопасности</h1>
+    <section class="memo-section">
+      <h2>Основные угрозы и советы</h2>
+      <ul class="memo-list">
+        <li><strong>IP-адрес:</strong> Не раскрывайте свой реальный IP, используйте VPN или Tor.</li>
+        <li><strong>User-Agent:</strong> Можно подделывать, чтобы скрыть устройство и браузер.</li>
+        <li><strong>Куки и сессии:</strong> Не храните важные данные в куках, очищайте их регулярно.</li>
+        <li><strong>Геолокация:</strong> Отключайте доступ сайтов к вашему местоположению.</li>
+        <li><strong>Камера и микрофон:</strong> Давайте доступ только доверенным сайтам.</li>
+        <li><strong>Фишинг:</strong> Никогда не вводите пароли на подозрительных сайтах.</li>
+        <li><strong>Обновления:</strong> Держите браузер и ОС в актуальном состоянии.</li>
+      </ul>
+    </section>
 
-  <h2 class="section-title">Основные советы</h2>
-  <ul>
-    <li>Используйте VPN или Tor для скрытия вашего реального IP-адреса.</li>
-    <li>Не вводите личные данные на подозрительных сайтах.</li>
-    <li>Регулярно обновляйте программное обеспечение и антивирусы.</li>
-    <li>Используйте двухфакторную аутентификацию (2FA) для важных аккаунтов.</li>
-    <li>Будьте осторожны с публичным Wi-Fi — злоумышленники могут перехватывать трафик.</li>
-  </ul>
+    <section class="memo-section">
+      <h2>Что делать, если ваши данные украдены</h2>
+      <ol class="memo-list">
+        <li>Смените пароли на всех сайтах.</li>
+        <li>Включите двухфакторную аутентификацию.</li>
+        <li>Проверьте активные сессии и выйдите со всех устройств.</li>
+        <li>Обратитесь в службу поддержки сервисов, где была угроза.</li>
+        <li>Следите за подозрительной активностью на счетах и почте.</li>
+      </ol>
+    </section>
 
-  <h2 class="section-title">Полезные ресурсы</h2>
-  <ul>
-    <li><a href="https://www.torproject.org/" target="_blank" rel="noopener" class="resource-link">Tor Project — Анонимный браузер</a></li>
-    <li><a href="https://www.privacytools.io/" target="_blank" rel="noopener" class="resource-link">PrivacyTools.io — Руководство по конфиденциальности</a></li>
-    <li><a href="https://haveibeenpwned.com/" target="_blank" rel="noopener" class="resource-link">Have I Been Pwned — Проверка утечек паролей</a></li>
-    <li><a href="https://www.eff.org/" target="_blank" rel="noopener" class="resource-link">EFF — Электронная свобода и безопасность</a></li>
-  </ul>
+    <section class="memo-section">
+      <h2>Важные моменты</h2>
+      <p>
+        Помните, что современные сайты и сервисы используют множество способов сбора информации — от простых куков до сложных методов фингерпринтинга.
+        Важно быть внимательным и использовать инструменты защиты.
+      </p>
+    </section>
+  </main>
 
-  <h2 class="section-title">Программы и инструменты</h2>
-  <ul>
-    <li>OpenVPN / WireGuard — для создания VPN-соединений.</li>
-    <li>KeePass / Bitwarden — менеджеры паролей.</li>
-    <li>Signal — зашифрованные сообщения и звонки.</li>
-    <li>Malwarebytes — антивирус и антишпионское ПО.</li>
-  </ul>
+  <footer>
+    <p>© 2025 Проект по демонстрации угроз и анонимности в интернете</p>
+  </footer>
 
-</main>
-
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Анонимность и Угрозы в Интернете</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Демонстрация угроз и анонимности в интернете</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-<header>
-  <nav class="menu">
-    <a href="index.html" class="active">Главная</a>
-    <a href="threats.html">Угрозы</a>
-    <a href="tips.html">Советы</a>
-    <a href="memo.html">Памятка</a>
-  </nav>
-</header>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">Анонимность и Угрозы</a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link active">Главная</a></li>
+        <li><a href="memo.html" class="nav-link">Памятка</a></li>
+        <li><a href="threats.html" class="nav-link">Угрозы</a></li>
+        <li><a href="tips.html" class="nav-link">Советы</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main class="container">
-  <h1>Добро пожаловать!</h1>
-  <p>Этот сайт демонстрирует, насколько важно знать об угрозах в интернете и как легко злоумышленники могут собирать ваши данные.</p>
-  <p>Перейдите на вкладку «Угрозы», чтобы увидеть это наглядно.</p>
-</main>
+  <main class="container">
+    <section class="hero">
+      <h1>Добро пожаловать на сайт демонстрации угроз и анонимности</h1>
+      <p>
+        Этот проект поможет понять, какие данные может собирать сайт и как злоумышленники используют эти данные.
+      </p>
+      <p>
+        На примерах мы покажем реальные угрозы и методы защиты.
+      </p>
+      <a href="threats.html" class="btn btn-primary">Перейти к угрозам</a>
+    </section>
 
-<footer>
-  <p>© 2025 Проект по безопасности в интернете</p>
-</footer>
-<script src="script.js"></script>
+    <section class="features">
+      <div class="feature-card">
+        <i class="fa-solid fa-shield-halved fa-3x"></i>
+        <h3>Анонимность</h3>
+        <p>Поймите, как сохранить приватность и избежать слежки в интернете.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-skull-crossbones fa-3x"></i>
+        <h3>Угрозы</h3>
+        <p>Посмотрите, какие данные могут быть украдены и как это происходит.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-lightbulb fa-3x"></i>
+        <h3>Советы</h3>
+        <p>Получите рекомендации и полезные ресурсы для защиты себя в сети.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Проект по демонстрации угроз и анонимности в интернете</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

